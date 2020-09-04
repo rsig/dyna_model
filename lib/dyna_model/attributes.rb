@@ -8,7 +8,7 @@ module DynaModel
       #
       # @example A standard string attribute
       #
-      #   class Recipe < AWS::Record::HashModel
+      #   class Recipe < Aws::Record::HashModel
       #     string_attr :name
       #   end
       #
@@ -17,7 +17,7 @@ module DynaModel
       #
       # @example A string attribute with `:set` set to true
       #
-      #   class Recipe < AWS::Record::HashModel
+      #   class Recipe < Aws::Record::HashModel
       #     string_attr :tags, :set => true
       #   end
       #
@@ -29,12 +29,12 @@ module DynaModel
       # @option options [Boolean] :set (false) When true this attribute
       #   can have multiple values.
       def string_attr name, options = {}
-        add_attribute(AWS::Record::Attributes::StringAttr.new(name, options))
+        add_attribute(Aws::Record::Attributes::ClassMethods::string_attr(name, options))
       end
 
       # Adds an integer attribute to this class.
       #
-      #     class Recipe < AWS::Record::HashModel
+      #     class Recipe < Aws::Record::HashModel
       #       integer_attr :servings
       #     end
       #
@@ -46,12 +46,12 @@ module DynaModel
       # @option options [Boolean] :set (false) When true this attribute
       #   can have multiple values.
       def integer_attr name, options = {}
-        add_attribute(AWS::Record::Attributes::IntegerAttr.new(name, options))
+        add_attribute(Aws::Record::Attributes::ClassMethods::integer_attr(name, options))
       end
 
       # Adds a float attribute to this class.
       #
-      #     class Listing < AWS::Record::HashModel
+      #     class Listing < Aws::Record::HashModel
       #       float_attr :score
       #     end
       #
@@ -63,14 +63,14 @@ module DynaModel
       # @option options [Boolean] :set (false) When true this attribute
       #   can have multiple values.
       def float_attr name, options = {}
-        add_attribute(AWS::Record::Attributes::FloatAttr.new(name, options))
+        add_attribute(Aws::Record::Attributes::ClassMethods::float_attr(name, options))
       end
 
       # Adds a boolean attribute to this class.
       #
       # @example
       #
-      #   class Book < AWS::Record::HashModel
+      #   class Book < Aws::Record::HashModel
       #     boolean_attr :read
       #   end
       #
@@ -85,7 +85,7 @@ module DynaModel
       # @param [Symbol] name The name of the attribute.
       def boolean_attr name, options = {}
 
-        attr = add_attribute(AWS::Record::Attributes::BooleanAttr.new(name, options))
+        attr = add_attribute(Aws::Record::Attributes::ClassMethods::boolean_attr(name, options))
 
         # add the boolean question mark method
         define_method("#{attr.name}?") do
@@ -98,7 +98,7 @@ module DynaModel
       #
       # @example A standard datetime attribute
       #
-      #   class Recipe < AWS::Record::HashModel
+      #   class Recipe < Aws::Record::HashModel
       #     datetime_attr :invented
       #   end
       #
@@ -116,14 +116,14 @@ module DynaModel
       #   can have multiple date times.
       #
       def datetime_attr name, options = {}
-        add_attribute(AWS::Record::Attributes::DateTimeAttr.new(name, options))
+        add_attribute(Aws::Record::Attributes::ClassMethods::dateTime_attr(name, options))
       end
 
       # Adds a date attribute to this class.
       #
       # @example A standard date attribute
       #
-      #   class Person < AWS::Record::HashModel
+      #   class Person < Aws::Record::HashModel
       #     date_attr :birthdate
       #   end
       #
@@ -139,7 +139,7 @@ module DynaModel
       #   can have multiple dates.
       #
       def date_attr name, options = {}
-        add_attribute(AWS::Record::Attributes::DateAttr.new(name, options))
+        add_attribute(Aws::Record::Attributes::ClassMethods::date_attr(name, options))
       end
 
       # Adds a DynamoDB binary attribute to this class.  A binary
@@ -158,7 +158,7 @@ module DynaModel
       end
 
       def serialized_attr name, options = {}
-        add_attribute(AWS::Record::Attributes::SerializedAttr.new(name, options))
+        add_attribute(Aws::Record::Attributes::ClassMethods::serialized_attr(name, options))
       end
 
       # A convenience method for adding the standard two datetime attributes
@@ -166,7 +166,7 @@ module DynaModel
       #
       # @example
       #
-      #   class Recipe < AWS::Record::HashModel
+      #   class Recipe < Aws::Record::HashModel
       #     timestamps
       #   end
       #

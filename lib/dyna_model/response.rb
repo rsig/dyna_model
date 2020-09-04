@@ -2,7 +2,7 @@ module DynaModel
   class Response
 
     def initialize(response)
-      raise ArgumentError, "response should be an AWS::Core::Response" unless response.is_a?(AWS::Core::Response)
+      raise ArgumentError, "response should be an Aws::Core::Response" unless response.is_a?(Aws::Core::Response)
       @raw_response = response
     end
 

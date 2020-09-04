@@ -14,15 +14,15 @@ module DynaModel
 
       extend ActiveModel::Translation
       extend ActiveModel::Callbacks
-      extend AWS::Record::AbstractBase
+      include Aws::Record
       include DynaModel::Persistence
       include DynaModel::Validations
 
       define_model_callbacks :create, :save, :destroy, :initialize, :update, :validation
 
       # OVERRIDE
-      # https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb#L258
-      # AWS::Record::AbstractBase for :select attributes
+      # https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb#L258
+      # Aws::Record::AbstractBase for :select attributes
       protected
       def [] attribute_name
         # Warn if using attributes that were not part of the :select (common with GSI/LSI projections)
@@ -34,18 +34,18 @@ module DynaModel
       end
 
       # OVERRIDE
-      # https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb#L76
-      # AWS::Record::AbstractBase for :select attributes
+      # https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb#L76
+      # Aws::Record::AbstractBase for :select attributes
       public
       def attributes
-        attributes = AWS::Core::IndifferentHash.new
+        attributes = Aws::Core::IndifferentHash.new
         (self.instance_variable_get("@_selected_attributes") || self.class.attributes.keys).inject(attributes) do |hash,attr_name|
           hash.merge(attr_name => __send__(attr_name))
         end
       end
 
       # OVERRIDE
-      # https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb#L132
+      # https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb#L132
       # pass options for 'expected'
       public
       def save opts = {}
@@ -64,7 +64,7 @@ module DynaModel
       end
 
       # OVERRIDE
-      # https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb#L176
+      # https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb#L176
       # and pass options for 'expected'
       public
       def delete(options={})
@@ -83,7 +83,7 @@ module DynaModel
       alias_method :destroy, :delete
 
       # OVERRIDE
-      # https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb#L265
+      # https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb#L265
       # pass options for 'expected'
       private
       def create(options={})
@@ -97,8 +97,8 @@ module DynaModel
       end
 
       # OVERRIDE
-      # https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb#L273
-      # AWS::Record::AbstractBase to trigger update even without changes (for callbacks etc)
+      # https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb#L273
+      # Aws::Record::AbstractBase to trigger update even without changes (for callbacks etc)
       # and pass options for 'expected'
       private
       def update(options={})
@@ -116,7 +116,7 @@ module DynaModel
     include ActiveModel::Observing if defined?(ActiveModel::Observing)
     include ActiveModel::Serializers::JSON
     include ActiveModel::Serializers::Xml
-    
+
     include DynaModel::Attributes
     include DynaModel::Schema
     include DynaModel::Query
@@ -199,7 +199,7 @@ module DynaModel
           while (table_metadata = self.describe_table) && table_metadata[:table][:table_status] == "DELETING"
             sleep 1
           end
-        rescue AWS::DynamoDB::Errors::ResourceNotFoundException => e
+        rescue Aws::DynamoDB::Errors::ResourceNotFoundException => e
           DynaModel::Config.logger.info "Table deleted"
         end
         true
@@ -239,7 +239,7 @@ module DynaModel
         options[:dynamo_db_port] = config[:port] || DynaModel::Config.port
         options[:api_version] ||= config[:api_version] || '2012-08-10'
 
-        @dynamo_db_client ||= AWS::DynamoDB::Client.new(options)
+        @dynamo_db_client ||= Aws::DynamoDB::Client.new(options)
       end
 
     end

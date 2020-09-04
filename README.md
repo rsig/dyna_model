@@ -1,6 +1,6 @@
 # DynaModel
 
-AWS DynamoDB ORM for Rails based on AWS::Record in the aws-sdk gem. Still a work in progress but very functional.
+Aws DynamoDB ORM for Rails based on Aws::Record in the aws-sdk gem. Still a work in progress but very functional.
 
 ## Installation
 ```
@@ -117,6 +117,6 @@ end
 ```
 
 
-## AWS::Record
-* http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/Record.html
-* https://github.com/aws/aws-sdk-ruby/blob/master/lib/aws/record/abstract_base.rb
+## Aws::Record
+* http://docs.Aws.amazon.com/AwsRubySDK/latest/Aws/Record.html
+* https://github.com/Aws/aws-sdk-ruby/blob/master/lib/Aws/record/abstract_base.rb

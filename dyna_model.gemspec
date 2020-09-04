@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = DynaModel::VERSION
   spec.authors       = ["Cary Dunn"]
   spec.email         = ["cary.dunn@gmail.com"]
-  spec.summary       = %q{DyanmoDB ORM on AWS::Record}
-  spec.description   = %q{DyanmoDB ORM on AWS::Record}
+  spec.summary       = %q{DyanmoDB ORM on Aws::Record}
+  spec.description   = %q{DyanmoDB ORM on Aws::Record}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport', '>= 4.0.0'
   spec.add_dependency 'activemodel', '>= 4.0.0'
   spec.add_dependency 'rails', '>= 4.0.0'
-  spec.add_dependency 'aws-sdk', '>= 1.39.0'
+  spec.add_dependency 'aws-sdk', '>= 3.0.1'
+  spec.add_dependency 'aws-record', '>= 2.4.0'
 end
-  

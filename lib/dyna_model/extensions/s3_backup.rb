@@ -53,7 +53,7 @@ module DynaModel
         end
 
         def dyna_model_s3_backup_client
-          Thread.current[:dyna_model_s3_backup_client] ||= AWS::S3.new
+          Thread.current[:dyna_model_s3_backup_client] ||= Aws::S3.new
         end
 
         def dyna_model_s3_backup_config

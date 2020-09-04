@@ -65,7 +65,7 @@ module DynaModel
               else
                 raise "Error acquiring lock: #{lock_obj.errors.full_messages.to_sentence}"
               end
-            rescue AWS::DynamoDB::Errors::ConditionalCheckFailedException
+            rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
               DynaModel::Config.logger.info "Lock condition failed for '#{lock_name}'. Retrying..."
               sleep((2 ** retries) * 0.05)
               retries += 1
@@ -93,7 +93,7 @@ module DynaModel
         else
           raise "Error releasing lock: #{lock_obj.errors.full_messages.to_sentence}"
         end
-      rescue AWS::DynamoDB::Errors::ConditionalCheckFailedException => e
+      rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException => e
         DynaModel::Config.logger.info "Condition failed to release lock '#{lock_name}'"
       end
 
@@ -116,7 +116,7 @@ module DynaModel
         else
           raise "Error extending lock: #{lock_obj.errors.full_messages.to_sentence}"
         end
-      rescue AWS::DynamoDB::Errors::ConditionalCheckFailedException => e
+      rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException => e
         DynaModel::Config.logger.info "Condition failed to extend lock '#{lock_name}'"
       end
 

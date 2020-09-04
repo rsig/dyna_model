@@ -16,13 +16,13 @@ module DynaModel
       }
 
       ATTR_TYPES = {
-        AWS::Record::Attributes::StringAttr => "S",
-        AWS::Record::Attributes::IntegerAttr => "N",
-        AWS::Record::Attributes::FloatAttr => "N",
-        AWS::Record::Attributes::BooleanAttr => "N",
-        AWS::Record::Attributes::DateTimeAttr => "S",
-        AWS::Record::Attributes::DateAttr => "S",
-        AWS::Record::Attributes::SerializedAttr => "B"
+        Aws::Record::Attributes::StringAttr => "S",
+        Aws::Record::Attributes::IntegerAttr => "N",
+        Aws::Record::Attributes::FloatAttr => "N",
+        Aws::Record::Attributes::BooleanAttr => "N",
+        Aws::Record::Attributes::DateTimeAttr => "S",
+        Aws::Record::Attributes::DateAttr => "S",
+        Aws::Record::Attributes::SerializedAttr => "B"
       }
 
       def table_schema
@@ -71,7 +71,7 @@ module DynaModel
         if val
           @dynamo_table_prefix = val
         else
-          @dynamo_table_prefix || AWS::Record.table_prefix || "#{DynaModel::Config.namespace}#{Rails.application.class.parent_name.to_s.underscore.dasherize}-#{Rails.env}-"
+          @dynamo_table_prefix || Aws::Record.table_prefix || "#{DynaModel::Config.namespace}#{Rails.application.class.parent_name.to_s.underscore.dasherize}-#{Rails.env}-"
         end
       end
 
@@ -79,7 +79,7 @@ module DynaModel
         if hash_key_key
           hash_key_attribute = self.attributes[hash_key_key.to_s]
           raise(ArgumentError, "Could not find attribute definition for hash_key #{hash_key_key}") unless hash_key_attribute
-          raise(ArgumentError, "Invalid attribute type for hash_key") unless [AWS::Record::Attributes::StringAttr, AWS::Record::Attributes::IntegerAttr, AWS::Record::Attributes::FloatAttr].include?(hash_key_attribute.class)
+          raise(ArgumentError, "Invalid attribute type for hash_key") unless [Aws::Record::Attributes::StringAttr, Aws::Record::Attributes::IntegerAttr, Aws::Record::Attributes::FloatAttr].include?(hash_key_attribute.class)
 
           validates_presence_of hash_key_attribute.name.to_sym
 
@@ -96,7 +96,7 @@ module DynaModel
         if range_key_key
           range_key_attribute = self.attributes[range_key_key.to_s]
           raise(ArgumentError, "Could not find attribute definition for range_key #{range_key_key}") unless range_key_attribute
-          raise(ArgumentError, "Invalid attribute type for range_key") unless [AWS::Record::Attributes::StringAttr, AWS::Record::Attributes::IntegerAttr, AWS::Record::Attributes::FloatAttr, AWS::Record::Attributes::DateAttr, AWS::Record::Attributes::DateTimeAttr].include?(range_key_attribute.class)
+          raise(ArgumentError, "Invalid attribute type for range_key") unless [Aws::Record::Attributes::StringAttr, Aws::Record::Attributes::IntegerAttr, Aws::Record::Attributes::FloatAttr, Aws::Record::Attributes::DateAttr, Aws::Record::Attributes::DateTimeAttr].include?(range_key_attribute.class)
 
           validates_presence_of range_key_attribute.name.to_sym
 

@@ -1,7 +1,7 @@
 module DynaModel
   class Table
 
-    extend AWS::DynamoDB::Types
+    extend Aws::DynamoDB::Types
 
     attr_reader :table_schema, :client, :schema_loaded_from_dynamo, :hash_key, :range_keys
 
@@ -72,7 +72,7 @@ module DynaModel
 
     def self.type_from_value(value)
       case
-      when value.kind_of?(AWS::DynamoDB::Binary) then :b
+      when value.kind_of?(Aws::DynamoDB::Binary) then :b
       when value.respond_to?(:to_str) then :s
       when value.kind_of?(Numeric) then :n
       else
@@ -210,7 +210,7 @@ module DynaModel
       options[:return_consumed_capacity] ||= :none # "NONE" # || "TOTAL"
       options[:order] ||= :desc
       #options[:index_name] ||= :none
-      #AWS::DynamoDB::Errors::ValidationException: ALL_PROJECTED_ATTRIBUTES can be used only when Querying using an IndexName
+      #Aws::DynamoDB::Errors::ValidationException: ALL_PROJECTED_ATTRIBUTES can be used only when Querying using an IndexName
       #options[:limit] ||= 10
       #options[:exclusive_start_key]
       #options[:query_filter]
@@ -449,7 +449,7 @@ module DynaModel
     end
 
     # Perform a table scan
-    # http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
+    # http://docs.Aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
     def scan(options={})
       options[:return_consumed_capacity] ||= :none # "NONE" # || "TOTAL"
       # Default if not already set
